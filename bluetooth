@@ -1,0 +1,29 @@
+#include <SoftwareSerial.h>
+char rec;
+SoftwareSerial blue(2,3); //tx al 3 i rx al 2
+void setup(){
+  pinMode(13,OUTPUT); // led de prova
+  blue.begin(9600);
+  blue.println("Conectat"); // La part de lectura app no ens fa falta 
+}
+void loop() {
+  if(blue.available()){
+    rec=blue.read();
+    switch(rec){
+      case 'a':
+        digitalWrite(13,LOW);
+        delay(500);
+        blue.println("Led off");
+        break;
+      case 'b':
+        digitalWrite(13,HIGH);
+        delay(500);
+        blue.println("Led on");
+        break;
+      default:
+        delay(500);
+        blue.print(rec);
+        blue.println(" ardre no valida");
+    }
+  }
+}
